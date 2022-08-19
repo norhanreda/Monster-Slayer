@@ -53,7 +53,19 @@
         <section id="BattleLog" class="container">
             <h2>Battle Log </h2>
             <ul>
-  <li>  </li>
+
+
+            <li v-for="LogMessage in LogMessages"> 
+                <span :class="">
+                  
+                    {{LogMessage.actionBy }}
+
+                </span>
+                
+                -  {{LogMessage.actionType }} - {{LogMessage.actionValue }}  
+            
+            
+            </li>
             </ul>    
         </section>
     </div>
