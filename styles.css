@@ -64,3 +64,11 @@ button {
   cursor: pointer;
   border: 10px 1px 10px solid rgba(0, 0, 0, 0.26);
 }
+
+button:disabled {
+   background-color: #ccc;
+   border-color: #ccc;
+   box-shadow: none;
+   color: #3f3f3f;
+   cursor: not-allowed;
+ }

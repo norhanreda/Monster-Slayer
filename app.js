@@ -9,12 +9,13 @@ const app =  Vue.createApp({
     return {
       playerHealth: 100,
       monesterHealth: 100,
-    
+      currentRound:0,
     };
   },
 
   methods: {
     attackMonester() {
+      this.currentRound ++;
       const attckValue = getRandomValue(5, 12);
       this.monesterHealth -= attckValue;
       this.attackPlayer();
@@ -22,6 +23,13 @@ const app =  Vue.createApp({
     attackPlayer() {
       const attckValue = getRandomValue(8, 15);
       this.playerHealth -= attckValue;
+    },
+    specialAttackMonester()
+    {
+      this.currentRound ++;
+      const attckValue = getRandomValue(10, 25);
+      this.monesterHealth -= attckValue;
+      this.attackPlayer();
     },
   },
   computed: {
@@ -31,7 +39,17 @@ const app =  Vue.createApp({
     monester_health_bar() {
       return { width: this.monesterHealth + "%" };
     },
+    may_use_specialAttack() {
+      return this.currentRound % 3 !=0;
+    },
+    
   },
 });
 app.mount("#game");
 
+/* 
+  
+  v-bid: -> :
+   v-on   -> @
+
+*/
