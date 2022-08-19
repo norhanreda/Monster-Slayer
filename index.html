@@ -34,11 +34,27 @@
             </div>
         </section>
 
-        <section id="control">
+        <section class="container"  v-if="winner">
+         <h2>Game Over ! </h2>
+         <h3 v-if="winner=== 'monester'">You lost ! </h3>
+         <h3 v-if="winner=== 'player'">You Win ♥ </h3>
+         <h3 v-if="winner=== 'draw'">It is a Draw </h3>
+         <button @click="startGame()">Start New game </button>
+
+        </section>
+
+        <section id="control" v-if="!winner">
             <button @click="attackMonester()"> ATTACK</button>
             <button  v-bind:disabled=" may_use_specialAttack" @click="specialAttackMonester()"> SPECIAL ATTACK</button>
-            <button> HEAL</button>
-            <button> SURRENDER</button>
+            <button @click="healPlayer"> HEAL</button>
+            <button @click="surrender()"> SURRENDER</button>
+        </section>
+
+        <section id="BattleLog" class="container">
+            <h2>Battle Log </h2>
+            <ul>
+  <li>  </li>
+            </ul>    
         </section>
     </div>
     
