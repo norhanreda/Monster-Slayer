@@ -1,75 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monster Slayer</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monster Slayer </title>
-
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
     <script src="https://unpkg.com/vue@next" defer></script>
     <script src="app.js" defer></script>
-</head>
+  </head>
 
-<body>
-
+  <body>
     <div id="game">
-        <h1 id="top"> Monster Slayer </h1>
+      <h1 id="top">Monster Slayer</h1>
 
+      <section id="player" class="container">
+        <h2>Player Health</h2>
+        <div class="health_bar">
+          <div class="health_bar_value" :style="player_health_bar"></div>
+        </div>
+      </section>
 
+      <section id="monester" class="container">
+        <h2>Monster Health</h2>
+        <div class="health_bar">
+          <div class="health_bar_value" :style="monester_health_bar"></div>
+        </div>
+      </section>
 
-        <section id="player" class="container">
-            <h2> Player Health </h2>
-            <div class="health_bar">
-                <div class="health_bar_value" :style="player_health_bar"></div>
-            </div>
+      <section class="container" v-if="winner">
+        <h2>Game Over !</h2>
+        <h3 v-if="winner=== 'monester'">You lost !</h3>
+        <h3 v-if="winner=== 'player'">You Win ♥</h3>
+        <h3 v-if="winner=== 'draw'">It is a Draw</h3>
+        <button @click="startGame()">Start New game</button>
+      </section>
 
-        </section>
+      <section id="control" v-if="!winner">
+        <button @click="attackMonester()">ATTACK</button>
+        <button
+          v-bind:disabled=" may_use_specialAttack"
+          @click="specialAttackMonester()"
+        >
+          SPECIAL ATTACK
+        </button>
+        <button @click="healPlayer">HEAL</button>
+        <button @click="surrender()">SURRENDER</button>
+      </section>
 
-        <section id="monester" class="container">
-            <h2> Monster Health </h2>
-            <div class="health_bar">
-                <div class="health_bar_value" :style="monester_health_bar"></div>
-            </div>
-        </section>
-
-        <section class="container"  v-if="winner">
-         <h2>Game Over ! </h2>
-         <h3 v-if="winner=== 'monester'">You lost ! </h3>
-         <h3 v-if="winner=== 'player'">You Win ♥ </h3>
-         <h3 v-if="winner=== 'draw'">It is a Draw </h3>
-         <button @click="startGame()">Start New game </button>
-
-        </section>
-
-        <section id="control" v-if="!winner">
-            <button @click="attackMonester()"> ATTACK</button>
-            <button  v-bind:disabled=" may_use_specialAttack" @click="specialAttackMonester()"> SPECIAL ATTACK</button>
-            <button @click="healPlayer"> HEAL</button>
-            <button @click="surrender()"> SURRENDER</button>
-        </section>
-
-        <section id="BattleLog" class="container">
-            <h2>Battle Log </h2>
-            <ul>
-
-
-            <li v-for="LogMessage in LogMessages"> 
-                <span :class="">
-                  
-                    {{LogMessage.actionBy }}
-
-                </span>
-                
-                -  {{LogMessage.actionType }} - {{LogMessage.actionValue }}  
-            
-            
-            </li>
-            </ul>    
-        </section>
+      <section id="BattleLog" class="container">
+        <h2>Battle Log</h2>
+        <ul>
+          <li v-for="LogMessage in LogMessages">
+            <span :class="{ 'log-player' : LogMessage.actionBy=== 'player'  , 'log-monester' :LogMessage.actionBy=== 'monester'}">{{LogMessage.actionBy=== 'player' ? 'player  ':'monester  ' }}</span>
+            <sapan :class="{'attack' :LogMessage.actionType==='attack', 'heal':LogMessage.actionType==='heal'}"> {{ LogMessage.actionType==='attack'? 'attack by ' :'heal himself for ' }} </sapan>
+            <span   >  {{ LogMessage.actionValue }} </span>
+           
+          </li>
+        </ul>
+      </section>
     </div>
-    
-</body>
-
+  </body>
 </html>
